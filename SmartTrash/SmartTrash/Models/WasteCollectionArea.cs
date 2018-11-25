@@ -9,8 +9,8 @@ namespace SmartTrash.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public float Longitude { get; set; }
         public float Latitude { get; set; }
+        public float Longitude { get; set; }
         public decimal Volume { get; set; }
         public decimal FilledVolume { get; set; }
         public decimal PercentOfFill => (100 * FilledVolume) / Volume;
