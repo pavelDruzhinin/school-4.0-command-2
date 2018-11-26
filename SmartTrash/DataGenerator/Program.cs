@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using SmartTrash.Data;
 using SmartTrash.Models;
 
-namespace DataGenerator
+namespace Faker
 { 
     class Program
     {
@@ -23,16 +23,9 @@ namespace DataGenerator
 
             using (var context = new TrashContext(optionsBuilder.Options))
             {
-                context.Add(new WasteCollectionArea()
-                    {
-                        Name = "Мусорная площадка 1",
-                        Longitude = 61.790867F,
-                        Latitude = 34.367756F,
-                        Volume = 1100,
-                        FilledVolume = 136
-                    });
-
-                context.SaveChanges();
+                var faker = new DataFaker(context, new RandomNewVolume());
+                faker.TimeFactor = 600.0F;
+                faker.Run();
             }
         }
     }
