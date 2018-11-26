@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\vendor.min.css" />
+    <Content Remove="wwwroot\js\vendor.min.js" />
+    <Content Remove="wwwroot\vendor.min.css" />
+    <Content Remove="wwwroot\vendor.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Shared\_NavBar.master" />
   </ItemGroup>
 
