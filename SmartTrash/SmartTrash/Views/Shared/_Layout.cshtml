@@ -17,17 +17,20 @@
 <body>
 
     <partial name="_NavBar" />
-
-
     <partial name="_CookieConsentPartial" />
+    <div class="container-fluid">
+        <div class="row">
+            <partial name="_SideBar" />
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - SmartTrash</p>
-        </footer>
+            @RenderBody()
+            
+        </div>
     </div>
+
+    <footer>
+        <p>&copy; 2018 - SmartTrash</p>
+    </footer>
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
