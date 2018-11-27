@@ -86,9 +86,9 @@ namespace Faker
         void SetNewVolume(WasteCollectionArea waste, DateTime currentDateTime, TimeSpan timePassed);
     }
 
-    public class RandomNewVolume : IVolumeFillStrategy
+    public class RandomFillVolume : IVolumeFillStrategy
     {
-        public RandomNewVolume() { _random = new Random(); }
+        public RandomFillVolume() { _random = new Random(); }
 
         public void SetNewVolume(WasteCollectionArea waste, DateTime currentDateTime, TimeSpan timePassed)
         {
@@ -96,5 +96,50 @@ namespace Faker
             waste.FilledVolume = (newVolume > waste.Volume) ? waste.Volume : newVolume;
         }
         private Random _random;
+    }
+
+    public class OnTimeBasedFillVolume : IVolumeFillStrategy
+    {
+        public OnTimeBasedFillVolume()
+        {
+            _random = new Random();
+            _wasteFillFactors = new Dictionary<int, double>();
+            _todayClearedWastes = new Dictionary<int, bool>();
+        }
+
+        public void SetNewVolume(WasteCollectionArea waste, DateTime currentDateTime, TimeSpan timePassed)
+        {
+            if (!_todayClearedWastes.Keys.Contains(waste.Id))
+            {
+                _todayClearedWastes.Add(waste.Id, false);
+            }
+
+            if (!_wasteFillFactors.Keys.Contains(waste.Id))
+            {
+                // Assumes that some of wastes filles more quickly than others
+                _wasteFillFactors.Add(waste.Id, 1.0 + _random.NextDouble() * 5.0);
+            }
+
+            bool wasteClearedToday = _todayClearedWastes[waste.Id];
+            double wasteFillFactor = _wasteFillFactors.GetValueOrDefault(waste.Id, 1.0F);
+
+            int hoursToSeconds(int x) => x * 3600;
+
+            int currentHour = currentDateTime.TimeOfDay.Hours;
+            if (_beginWorkHour <= currentHour && currentHour <= _endWorkHour)
+            {
+                double garbageCollectProbability = (100 * timePassed.TotalSeconds) / 
+                    (hoursToSeconds(_endWorkHour) - hoursToSeconds(_beginWorkHour)); 
+
+                // TODO: Garbage collection if waste not cleared
+            }
+
+            // TODO: Fill waste
+        }
+        private const int _beginWorkHour = 7;
+        private const int _endWorkHour = 22;
+        private readonly Random _random;
+        private Dictionary<int, bool> _todayClearedWastes;
+        private Dictionary<int, double> _wasteFillFactors;
     }
 }
