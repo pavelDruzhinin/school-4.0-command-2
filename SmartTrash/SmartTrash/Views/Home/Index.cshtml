@@ -5,15 +5,54 @@
 
 <h2>Мусорные баки</h2>
 <div class="table-responsive">
-    <table class="table table-striped table-sm table-hover">
+    <table id ="trashpoints" class="table table-striped table-sm table-hover">
         <thead>
         <tr>
             <th>Название</th>
-            <th>Координаты</th>
+            <th>Широта</th>
+            <th>Долгота</th>
             <th>Объем</th>
             <th>Наполненность</th>
             <th>Наполненность, %</th>
         </tr>
         </thead>
+        <tbody></tbody>
     </table>
 </div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var table = $('#trashpoints').DataTable({
+                ajax: {
+                    url: "/areas",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: 'name'
+                    },
+                    {
+                        data: 'latitude'
+                    },
+                    {
+                        data: 'longitude'
+                    },
+                    {
+                        data: 'volume'
+                    },
+                    {
+                        data: 'filledVolume'
+                    },
+                    {
+                        data: 'percentOfFill',
+                        render: function(data) {
+                            return Math.round(data);
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
