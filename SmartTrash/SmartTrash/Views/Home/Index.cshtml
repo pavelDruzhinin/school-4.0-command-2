@@ -9,10 +9,8 @@
         <thead>
         <tr>
             <th>Название</th>
-            <th>Широта</th>
-            <th>Долгота</th>
-            <th>Объем</th>
-            <th>Наполненность</th>
+            <th>Координаты</th>
+            <th>Объем, л.</th>
             <th>Наполненность, %</th>
         </tr>
         </thead>
@@ -34,22 +32,18 @@
                         data: 'name'
                     },
                     {
-                        data: 'latitude'
-                    },
-                    {
-                        data: 'longitude'
+                        data: {
+                            latitude:'latitude',
+                            longitude:'longitude'
+                        },
+                        render: function (data) { return data.latitude + '; ' + data.longitude }
                     },
                     {
                         data: 'volume'
                     },
                     {
-                        data: 'filledVolume'
-                    },
-                    {
                         data: 'percentOfFill',
-                        render: function(data) {
-                            return Math.round(data);
-                        }
+                        render: function (data) {return Math.round(data)}
                     }
                 ]
             });
