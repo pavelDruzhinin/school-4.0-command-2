@@ -20,9 +20,20 @@ namespace SmartTrash.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? minFill, int? maxFill)
         {
-            List<WasteCollectionArea> areas = await _db.WasteCollectionAreas.ToListAsync();
+            if (!minFill.HasValue)
+            {
+                minFill = 0;
+            }
+            if (!maxFill.HasValue)
+            {
+                maxFill = 100;
+            }
+            List<WasteCollectionArea> areas = await _db.WasteCollectionAreas
+                .Where(a => a.PercentOfFill >= minFill)
+                .Where(a => a.PercentOfFill <= maxFill)
+                .ToListAsync();
 
             return Json(areas);
         }
