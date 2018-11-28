@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\CRUD\**" />
+    <Content Remove="Views\CRUD\**" />
+    <EmbeddedResource Remove="Views\CRUD\**" />
+    <None Remove="Views\CRUD\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\css\vendor.min.css" />
     <Content Remove="wwwroot\js\vendor.min.js" />
     <Content Remove="wwwroot\vendor.min.css" />
