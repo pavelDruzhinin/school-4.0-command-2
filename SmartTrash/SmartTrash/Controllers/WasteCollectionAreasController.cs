@@ -28,7 +28,7 @@ namespace SmartTrash.Controllers
         }
 
         [Route("admin")]
-        public IActionResult admin()
+        public IActionResult Admin()
         {
             var model = _db.WasteCollectionAreas.ToList();
             return View(model);
@@ -53,8 +53,7 @@ namespace SmartTrash.Controllers
                 _db.WasteCollectionAreas.Add(area);
             else
             {
-                _db.WasteCollectionAreas.Attach(area);
-                _db.Entry(area).State = EntityState.Modified;
+                _db.WasteCollectionAreas.Update(area);
             }
             await _db.SaveChangesAsync();
             return RedirectToAction("admin");
