@@ -54,7 +54,17 @@ namespace SmartTrash.Controllers
                 return View();
 
             var area = await _db.WasteCollectionAreas.FirstOrDefaultAsync(x => x.Id == id);
+<<<<<<< HEAD
             return View(area);
+=======
+            var existarea = new AreaEdit();
+            existarea.Id = area.Id;
+            existarea.Name = area.Name;
+            existarea.Latitude = area.Latitude;
+            existarea.Longitude = area.Longitude;
+            existarea.Volume = area.Volume;
+            return View(existarea);
+>>>>>>> parent of f42664a... some code refactor
         }
 
         [HttpPost]
