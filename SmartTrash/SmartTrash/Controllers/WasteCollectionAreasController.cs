@@ -54,12 +54,7 @@ namespace SmartTrash.Controllers
                 return View();
 
             var area = await _db.WasteCollectionAreas.FirstOrDefaultAsync(x => x.Id == id);
-            var existarea = new AreaEdit();
-            existarea.Id = area.Id;
-            existarea.Name = area.Name;
-            existarea.Latitude = area.Latitude;
-            existarea.Longitude = area.Longitude;
-            existarea.Volume = area.Volume;
+            var existarea = new AreaEdit { Id = area.Id, Name = area.Name, Latitude = area.Latitude, Longitude = area.Longitude, Volume = area.Volume };
             return View(existarea);
         }
 
