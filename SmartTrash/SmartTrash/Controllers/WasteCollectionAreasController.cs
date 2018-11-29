@@ -54,33 +54,21 @@ namespace SmartTrash.Controllers
                 return View();
 
             var area = await _db.WasteCollectionAreas.FirstOrDefaultAsync(x => x.Id == id);
-            var existarea = new AreaEdit { Id = area.Id, Name = area.Name, Latitude = area.Latitude, Longitude = area.Longitude, Volume = area.Volume };
-            return View(existarea);
+            return View(area);
         }
 
         [HttpPost]
         [Route("admin/add")]
         [Route("admin/edit/")]
-        public async Task<IActionResult> TrashPoints(AreaEdit area)
+        public async Task<IActionResult> TrashPoints(WasteCollectionArea area)
         {
             if (ModelState.IsValid)
             {
                 if (area.Id == default(int))
-                    _db.WasteCollectionAreas.Add(new WasteCollectionArea
-                    {
-                        Name = area.Name,
-                        Latitude = (float)area.Latitude,
-                        Longitude = (float)area.Longitude,
-                        Volume = (decimal)area.Volume
-                    });
+                    _db.WasteCollectionAreas.Add(area);
                 else
                 {
-                    var existingarea = await _db.WasteCollectionAreas.FirstOrDefaultAsync(x => x.Id == area.Id);
-                    existingarea.Name = area.Name;
-                    existingarea.Latitude = (float)area.Latitude;
-                    existingarea.Longitude = (float)area.Longitude;
-                    existingarea.Volume = (decimal)area.Volume;
-                    _db.WasteCollectionAreas.Update(existingarea);
+                    _db.WasteCollectionAreas.Update(area);
                 }
                 await _db.SaveChangesAsync();
                 return RedirectToAction("admin");
