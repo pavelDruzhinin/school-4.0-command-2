@@ -54,7 +54,8 @@ namespace Faker
             foreach (WasteCollectionArea waste in _cachedWasteCollectionAreas)
             {
                 // Here we will generate new volume value for concrete waste
-                _newVolumeGenerator.SetNewVolume(waste, _currentVirtualDateTime, TimeSpan.Zero);
+                _newVolumeGenerator.SetNewVolume(
+                    waste, _currentVirtualDateTime, new TimeSpan((long)(TimeFactor / 100e-9)));
                 _trashContext.Update(waste);
             }
 
@@ -117,7 +118,7 @@ namespace Faker
             if (!_wasteFillFactors.Keys.Contains(waste.Id))
             {
                 // Assumes that some of wastes filles more quickly than others
-                _wasteFillFactors.Add(waste.Id, 1.0 + _random.NextDouble() * 5.0);
+                _wasteFillFactors.Add(waste.Id, 1.0 + _random.NextDouble() * 4.0);
             }
 
             bool wasteClearedToday = _todayClearedWastes[waste.Id];
@@ -126,16 +127,36 @@ namespace Faker
             int hoursToSeconds(int x) => x * 3600;
 
             int currentHour = currentDateTime.TimeOfDay.Hours;
+            double currentTimeTotalSeconds = currentDateTime.TimeOfDay.TotalSeconds;
             if (_beginWorkHour <= currentHour && currentHour <= _endWorkHour)
             {
-                double garbageCollectProbability = (100 * timePassed.TotalSeconds) / 
+                double garbageCollectProbability = (1 * timePassed.TotalSeconds) / 
                     (hoursToSeconds(_endWorkHour) - hoursToSeconds(_beginWorkHour)); 
 
-                // TODO: Garbage collection if waste not cleared
+                if (_random.NextDouble() < garbageCollectProbability && 
+                    !_todayClearedWastes[waste.Id])
+                {
+                    waste.FilledVolume = 0;
+                    _todayClearedWastes[waste.Id] = true;
+                }
             }
 
-            // TODO: Fill waste
+            if (currentTimeTotalSeconds <= (2 * timePassed.TotalSeconds))
+            {
+                foreach (KeyValuePair<int, bool> item in _todayClearedWastes)
+                {
+                    _todayClearedWastes[item.Key] = false;
+                }
+            }
+
+            decimal newVolume = (decimal)((_wasteFillFactors[waste.Id] * 
+                timePassed.TotalSeconds * ((double)waste.Volume / _secondsInDay)) + 
+                _random.NextDouble() * timePassed.TotalSeconds);
+
+            waste.FilledVolume = (newVolume > waste.Volume) ? waste.Volume : newVolume;
         }
+
+        private const int _secondsInDay = 3600 * 24;
         private const int _beginWorkHour = 7;
         private const int _endWorkHour = 22;
         private readonly Random _random;
