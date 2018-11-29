@@ -67,7 +67,7 @@
  */
 
 [role="main"] {
-    padding-top: 10px; /* Space for fixed navbar */
+    padding-top: 40px; /* Space for fixed navbar */
 }
 
 #map {
