@@ -17,12 +17,15 @@ namespace SmartTrash.Models
         public string Name { get; set; }
         [Display(Name = "Широта")]
         [Required(ErrorMessage ="Введите широту")]
+        [RegularExpression(@"[-]?([0-9]*[,])?[0-9]+$", ErrorMessage = "Введите координату корректно через запятую")]
         public float? Latitude { get; set; }
         [Display(Name = "Долгота")]
         [Required(ErrorMessage ="Введите долготу")]
+        [RegularExpression(@"[-]?([0-9]*[,])?[0-9]+$", ErrorMessage = "Введите координату корректно через запятую")]
         public float? Longitude { get; set; }
         [Required(ErrorMessage ="Введите объём")]
         [Display(Name = "Объём")]
+        [RegularExpression(@"([0-9]*[,])?[0-9]+$", ErrorMessage = "Введите объём корректно через запятую, знак минуса и плюса воспрещён")]
         public decimal? Volume { get; set; }
 
         public AreaEdit()
