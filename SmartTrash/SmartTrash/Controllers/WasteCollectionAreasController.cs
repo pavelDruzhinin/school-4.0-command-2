@@ -45,29 +45,61 @@ namespace SmartTrash.Controllers
             return View(model);
         }
 
+        [HttpGet]
         [Route("admin/add")]
-        [Route("admin/edit/{id:int}")]
+        [Route("admin/edit/")]
         public async Task<IActionResult> TrashPoints(int? id)
         {
             if (!id.HasValue)
                 return View();
 
             var area = await _db.WasteCollectionAreas.FirstOrDefaultAsync(x => x.Id == id);
-            return View(area);
+            var existarea = new AreaEdit();
+            existarea.Id = area.Id;
+            existarea.Name = area.Name;
+            existarea.Latitude = area.Latitude;
+            existarea.Longitude = area.Longitude;
+            existarea.Volume = area.Volume;
+            return View(existarea);
         }
 
         [HttpPost]
-        [Route("Save")]
-        public async Task<IActionResult> Save(WasteCollectionArea area)
+        [Route("admin/add")]
+        [Route("admin/edit/")]
+        public async Task<IActionResult> TrashPoints(AreaEdit area)
         {
-            if (area.Id == default(int))
-                _db.WasteCollectionAreas.Add(area);
+            if (ModelState.IsValid)
+            {
+                if (area.Id == default(int))
+                    _db.WasteCollectionAreas.Add(new WasteCollectionArea
+                    {
+                        Name = area.Name,
+                        Latitude = (float)area.Latitude,
+                        Longitude = (float)area.Longitude,
+                        Volume = (decimal)area.Volume
+                    });
+                else
+                {
+                    var existingarea = await _db.WasteCollectionAreas.FirstOrDefaultAsync(x => x.Id == area.Id);
+                    existingarea.Name = area.Name;
+                    existingarea.Latitude = (float)area.Latitude;
+                    existingarea.Longitude = (float)area.Longitude;
+                    existingarea.Volume = (decimal)area.Volume;
+                    _db.WasteCollectionAreas.Update(existingarea);
+                }
+                await _db.SaveChangesAsync();
+                return RedirectToAction("admin");
+            }
             else
             {
-                _db.WasteCollectionAreas.Update(area);
+                if (area.Latitude == 0)
+                    ModelState.AddModelError("Latitude", "Точка не может равняться нулю так как она находится вне города");
+                if (area.Longitude == 0)
+                    ModelState.AddModelError("Longitude", "Точка не может равняться нулю так как она находится вне города");
+                if (area.Volume == 0)
+                    ModelState.AddModelError("Volume","Объём мусорки не может быть нулевым");
             }
-            await _db.SaveChangesAsync();
-            return RedirectToAction("admin");
+            return View(area);
         }
 
         [Route("admin/del/{id:int}")]
