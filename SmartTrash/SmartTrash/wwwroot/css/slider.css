@@ -1,0 +1,18 @@
+input[type=range]::-webkit-slider-runnable-track{
+	background: #C0C0C0;
+}
+
+.slider{
+	margin-top: 30%;
+	border-top: 1px solid #C0C0C0;
+	padding-left: 5%;
+}
+
+#rangeSubmit{
+	margin-top: 5px;
+}
+
+#amount{
+	height: 21px;
+	vertical-align: top;
+}
