@@ -14,6 +14,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\CRUD\**" />
+    <Content Remove="Views\CRUD\**" />
+    <EmbeddedResource Remove="Views\CRUD\**" />
+    <None Remove="Views\CRUD\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\css\vendor.min.css" />
+    <Content Remove="wwwroot\js\vendor.min.js" />
+    <Content Remove="wwwroot\vendor.min.css" />
+    <Content Remove="wwwroot\vendor.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Shared\_NavBar.master" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
@@ -23,6 +42,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>
