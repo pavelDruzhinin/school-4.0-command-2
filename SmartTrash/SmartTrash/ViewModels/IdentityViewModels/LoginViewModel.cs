@@ -9,7 +9,7 @@ namespace SmartTrash.ViewModels.IdentityViewModels
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "UserName")]
+        [Display(Name = "Username (Login)")]
         [StringLength(16)]
         public string UserName { get; set; }
 
@@ -20,5 +20,7 @@ namespace SmartTrash.ViewModels.IdentityViewModels
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; } = true;
+
+        public string ReturnUrl { get; set; }
     }
 }
