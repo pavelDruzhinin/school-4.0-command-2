@@ -39,12 +39,14 @@
             </li>
             <li class="nav-item">
                 <div class="slider">
-                    <span>Выберите значение </span>
-                    <form action="">
-                        <input type="range" id="slider1" value="" min="0" max="100">
-                        <input id="amount" value="100" maxlength="3" size="3">
-                    </form>
-                    <button type="button" id="rangeSubmit" onclick="Slider(amount.value)" class="btn btn-secondary btn-sm">Показать список</button>
+                    <Label>Выберите значение заполненности</Label>
+                    <div id="slider"></div>
+                    <label>Минимальное значение:</label>
+                    <label class="" id=sliderValueLower></label>
+                    <label>Максимальное значение:</label>
+                    <span class="" id=sliderValueUpper></span>
+                    <br />
+                    <button type="button" id="rangeSubmit" onclick="tableFiltred(sliderValueLower.value, sliderValueUpper.value)" class="btn btn-secondary btn-sm">Показать список</button>
                 </div>
             </li>
         </ul>

@@ -1,11 +1,29 @@
-input[type=range]::-webkit-slider-runnable-track{
-	background: #C0C0C0;
+.slider{ 
+	max-width: 230px;
+	padding-left:5%;
+	margin-top:30%;
+	border-top: 1px solid #808080;
 }
 
-.slider{
-	margin-top: 30%;
-	border-top: 1px solid #C0C0C0;
-	padding-left: 5%;
+.slider label{
+	font-weight: 500;
+    color: #333;
+}
+
+#slider {
+    max-width: 200px;
+	min-width: 100px;
+background: #C0C0C0;
+	height:27px;
+    margin: 5px 0px 5px 0px;
+}
+
+.noUi-horizontal .noUi-handle{
+	border: 1px solid #808080;
+}
+
+.noUi-handle{
+	border: 1px solid #000000;
 }
 
 #rangeSubmit{
