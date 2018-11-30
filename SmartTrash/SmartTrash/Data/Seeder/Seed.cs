@@ -51,7 +51,7 @@ namespace SmartTrash.Data.Seeder
                     Email = "admin@localhost.localdomain"
                 };
 
-                IdentityResult result = _userManager.CreateAsync(adminUser, "1234567890").Result;
+                IdentityResult result = _userManager.CreateAsync(adminUser, "P@ssw0rd").Result;
 
                 if (result.Succeeded)
                 {
