@@ -30,11 +30,6 @@ namespace SmartTrash.Models
                 return Volume == null || Volume==0 ? 0 : (100 * FilledVolume) / (decimal)Volume;
             }
         }
-
-        public bool Empty
-        {
-            get { return Id == 0; }
-        }
         public WasteCollectionArea()
         {
 
