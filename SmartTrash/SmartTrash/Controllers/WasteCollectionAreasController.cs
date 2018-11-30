@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartTrash.Data;
@@ -9,6 +10,7 @@ using SmartTrash.Models;
 
 namespace SmartTrash.Controllers
 {
+    [AllowAnonymous]
     [Route("areas")]
     public class WasteCollectionAreasController : Controller
     {
