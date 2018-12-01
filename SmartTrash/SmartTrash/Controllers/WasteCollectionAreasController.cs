@@ -10,7 +10,6 @@ using SmartTrash.Models;
 
 namespace SmartTrash.Controllers
 {
-    [AllowAnonymous]
     [Route("areas")]
     public class WasteCollectionAreasController : Controller
     {

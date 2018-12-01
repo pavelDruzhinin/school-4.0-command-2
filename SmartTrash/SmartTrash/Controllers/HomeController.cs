@@ -9,7 +9,7 @@ using SmartTrash.Models;
 
 namespace SmartTrash.Controllers
 {
-    [AllowAnonymous]
+
     public class HomeController : Controller
     {
         public IActionResult Index()
