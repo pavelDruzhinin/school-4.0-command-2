@@ -4,31 +4,26 @@
     ViewData["Title"] = "Login";
 }
 
-<h2 class="pt-3 pb-2 mb-3 border-bottom">Login</h2>
+<h2 class="pt-3 pb-2 mb-3 border-bottom">Sign in</h2>
 
 
 <form method="post" class="form-signin" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
 
-    <div asp-validation-summary="ModelOnly"></div>
 
-    <div class="form-label-group">
-        <input type="text" id="inputLogin" class="form-control" placeholder="Email address" autofocus="" asp-for="UserName">
-        <label for="inputLogin">Login</label>
-    </div>
+    <label class="sr-only" for="inputLogin">Login</label>
+    <input type="text" id="inputLogin" class="form-control" placeholder="Username" asp-for="UserName">
 
 
-    <div class="form-label-group">
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" asp-for="Password">
-        <label for="inputPassword">Password</label>
-        <span asp-validation-for="Password"></span>
-    </div>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" asp-for="Password">
     
-    <div class="form-label-group">
-        <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" />
+    <div class="checkbox mb-3">
+        <label asp-for="RememberMe">
+            <input type="checkbox" asp-for="RememberMe"> Remember me
+        </label>
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
     <p class="mt-5 mb-3 text-muted text-center">© 2018-2019</p>
 </form>
 
