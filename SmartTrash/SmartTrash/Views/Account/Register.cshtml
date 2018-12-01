@@ -1,0 +1,34 @@
+﻿@model SmartTrash.ViewModels.IdentityViewModels.RegisterViewModel
+
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2 class="pt-3 pb-2 mb-3 border-bottom">Register</h2>
+
+
+<form method="post" class="form-signin" asp-controller="Account" asp-action="Register" >
+
+    <div class="form-label-group">
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" autofocus="" asp-for="Email">
+        <label for="inputEmail">Email address</label>
+        <span asp-validation-for="Email"></span>
+    </div>
+   
+
+    <div class="form-label-group">
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password"  asp-for="Password">
+        <label for="inputPassword">Password</label>
+        <span asp-validation-for="Password"></span>
+    </div>
+    
+    <div class="form-label-group">
+        <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="Confirm Password" asp-for="ConfirmPassword">
+        <label for="inputPasswordConfirm">Confirm Password</label>
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    <p class="mt-5 mb-3 text-muted text-center">© 2018-2019</p>
+</form>
