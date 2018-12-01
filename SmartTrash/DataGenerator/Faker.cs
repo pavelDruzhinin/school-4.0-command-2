@@ -110,6 +110,11 @@ namespace Faker
 
         public void SetNewVolume(WasteCollectionArea waste, DateTime currentDateTime, TimeSpan timePassed)
         {
+            if (waste.Volume <= 0)
+            {
+                return;
+            }
+
             if (!_todayClearedWastes.Keys.Contains(waste.Id))
             {
                 _todayClearedWastes.Add(waste.Id, false);
@@ -128,14 +133,24 @@ namespace Faker
 
             int currentHour = currentDateTime.TimeOfDay.Hours;
             double currentTimeTotalSeconds = currentDateTime.TimeOfDay.TotalSeconds;
-            if (_beginWorkHour <= currentHour && currentHour <= _endWorkHour)
+
+            bool isDay() => _beginWorkHour <= currentHour && currentHour <= _endWorkHour;
+            if (isDay())
             {
                 double garbageCollectProbability = (1 * timePassed.TotalSeconds) / 
                     (hoursToSeconds(_endWorkHour) - hoursToSeconds(_beginWorkHour)); 
+                
+                // 90 % Filled wastes has more garbage collect probability (+20%)
+                if ((double)(waste.FilledVolume / waste.Volume) >= 0.9)
+                {
+                    garbageCollectProbability += (0.20 * timePassed.TotalSeconds) /
+                        (hoursToSeconds(_endWorkHour) - hoursToSeconds(_beginWorkHour)); 
+                }
 
                 if (_random.NextDouble() < garbageCollectProbability && 
-                    !_todayClearedWastes[waste.Id])
+                    !wasteClearedToday)
                 {
+                    Console.WriteLine($"Waste {waste.Name} was cleared. Filled volume was {waste.FilledVolume}");
                     waste.FilledVolume = 0;
                     _todayClearedWastes[waste.Id] = true;
                 }
@@ -143,15 +158,19 @@ namespace Faker
 
             if (currentTimeTotalSeconds <= (2 * timePassed.TotalSeconds))
             {
-                foreach (KeyValuePair<int, bool> item in _todayClearedWastes)
-                {
-                    _todayClearedWastes[item.Key] = false;
-                }
+                _todayClearedWastes[waste.Id] = false;
             }
 
-            decimal newVolume = (decimal)((_wasteFillFactors[waste.Id] * 
-                timePassed.TotalSeconds * ((double)waste.Volume / _secondsInDay)) + 
-                _random.NextDouble() * timePassed.TotalSeconds);
+            // Once a mounth somebody throws out a granmother's case
+            if ((timePassed.TotalSeconds / (3600 * 24 * 30)) > _random.NextDouble())
+            {
+                waste.FilledVolume = waste.Volume; 
+            }
+
+            decimal newVolume = waste.FilledVolume + 
+                (decimal)(((isDay() ? _wasteFillFactors[waste.Id] : 1.0) * 
+                timePassed.TotalSeconds * ((double)waste.Volume / (7.5 * _secondsInDay))) + 
+                _random.NextDouble() * timePassed.TotalMinutes);
 
             waste.FilledVolume = (newVolume > waste.Volume) ? waste.Volume : newVolume;
         }
