@@ -104,8 +104,9 @@
 }
 
 
+
 /*
-* Register Page
+* Signin Form
 */
 
 .form-signin {
@@ -113,6 +114,16 @@
     max-width: 420px;
     padding: 15px;
 }
+
+.form-signin .form-control {
+    margin-bottom: 10px;
+}
+
+/*
+* Register Page
+*/
+
+
 
 .form-label-group {
     position: relative;
