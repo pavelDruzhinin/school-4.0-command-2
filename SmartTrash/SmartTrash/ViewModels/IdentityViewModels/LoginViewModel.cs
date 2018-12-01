@@ -10,11 +10,9 @@ namespace SmartTrash.ViewModels.IdentityViewModels
     {
         [Required]
         [Display(Name = "Username (Login)")]
-        [StringLength(16)]
         public string UserName { get; set; }
 
         [Required]
-        [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
