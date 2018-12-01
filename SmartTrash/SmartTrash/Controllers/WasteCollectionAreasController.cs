@@ -73,15 +73,6 @@ namespace SmartTrash.Controllers
                 await _db.SaveChangesAsync();
                 return RedirectToAction("Admin");
             }
-            else
-            {
-                if (area.Latitude == 0)
-                    ModelState.AddModelError("Latitude", "Точка не может равняться нулю так как она находится вне города");
-                if (area.Longitude == 0)
-                    ModelState.AddModelError("Longitude", "Точка не может равняться нулю так как она находится вне города");
-                if (area.Volume == 0)
-                    ModelState.AddModelError("Volume","Объём мусорки не может быть нулевым");
-            }
             return View(area);
         }
 

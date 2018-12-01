@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using SmartTrash.CustomValidation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,13 +16,16 @@ namespace SmartTrash.Models
         [StringLength(200, MinimumLength = 3, ErrorMessage = "Название должно содержать от 3 до 200 знаков")]
         public string Name { get; set; }
         [Display(Name = "Широта")]
-        [Required(ErrorMessage = "Введите широту")]
+        [Required(ErrorMessage ="Введите широту")]
+        [Coordinate]
         public float? Latitude { get; set; }
         [Display(Name = "Долгота")]
         [Required(ErrorMessage = "Введите долготу")]
+        [Coordinate]
         public float? Longitude { get; set; }
-        [Required(ErrorMessage = "Введите объём")]
         [Display(Name = "Объём")]
+        [Required(ErrorMessage = "Введите объём")]
+        [Volume]
         public decimal? Volume { get; set; }
         public decimal FilledVolume { get; set; }
         public decimal PercentOfFill

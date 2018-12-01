@@ -1,15 +1,15 @@
 ﻿@model SmartTrash.Models.WasteCollectionArea
 @{
-    var formHeader = Model == null || Model.Id==0 ? "Добавление точки" : "Редактирование";
-    var formButton = Model == null || Model.Id==0 ? "Добавить" : "Сохранить";
+    var formHeader = Model == null || Model.Id == 0 ? "Добавление точки" : "Редактирование";
+    var formButton = Model == null || Model.Id == 0 ? "Добавить" : "Сохранить";
     ViewData["Title"] = formHeader;
 }
 <h1>@formHeader</h1>
 <form class="form" asp-action="TrashPoints" method="post">
     <div asp-validation-summary="All"></div>
-    @if (Model!=null)
+    @if (Model != null)
     {
-        <input asp-for="Id" hidden/>
+        <input asp-for="Id" hidden />
     }
     <div class="form-group">
         <label asp-for="Name"></label>
@@ -18,18 +18,24 @@
     </div>
     <div class="form-group">
         <label asp-for="Latitude"></label>
-        <input asp-for="Latitude" pattern="[-]?([0-9]*[,])?[0-9]+$" title="Вы ввели буквы или точку, для ввода координаты используйте цифры и запятую"/>
+        <input asp-for="Latitude" />
         <span asp-validation-for="Latitude"></span>
     </div>
     <div class="form-group">
         <label asp-for="Longitude"></label>
-        <input asp-for="Longitude" pattern="[-]?([0-9]*[,])?[0-9]+$" title="Вы ввели буквы или точку, для ввода координаты используйте цифры и запятую"/>
+        <input asp-for="Longitude" />
         <span asp-validation-for="Longitude"></span>
     </div>
     <div class="form-group">
         <label asp-for="Volume"></label>
-        <input asp-for="Volume" pattern="[1-9]\w*([0-9]*[,])?[0-9]+$" title="Вы ввели буквы или точку или использовали знак '-', для ввода объёма используйте цифры и запятую ноль вводить нельзя, также объём не может равняться однозначному числу"/>
+        <input asp-for="Volume" />
         <span asp-validation-for="Volume"></span>
+    </div>
+    <div class="form-group">
+        @if (Model != null)
+        {
+            <input asp-for="FilledVolume" hidden/>
+        }
     </div>
     <input class="btn btn-success" type="submit" value=@formButton>
 </form>
