@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SmartTrash.Models;
 
 namespace SmartTrash.Controllers
@@ -12,9 +13,17 @@ namespace SmartTrash.Controllers
 
     public class HomeController : Controller
     {
+        private IConfiguration _config;
+        public HomeController(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            string key = _config.GetSection("MapApiKeys").GetSection("Yandex").Value;
+
+            return View((object)key);
         }
 
         public IActionResult About()
