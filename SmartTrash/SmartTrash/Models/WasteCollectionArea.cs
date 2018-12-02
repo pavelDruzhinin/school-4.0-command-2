@@ -18,15 +18,15 @@ namespace SmartTrash.Models
         [Display(Name = "Широта")]
         [Required(ErrorMessage ="Введите широту")]
         [Coordinate]
-        public float? Latitude { get; set; }
+        public float Latitude { get; set; }
         [Display(Name = "Долгота")]
         [Required(ErrorMessage = "Введите долготу")]
         [Coordinate]
-        public float? Longitude { get; set; }
+        public float Longitude { get; set; }
         [Display(Name = "Объём")]
         [Required(ErrorMessage = "Введите объём")]
         [Volume]
-        public decimal? Volume { get; set; }
+        public decimal Volume { get; set; }
         public decimal FilledVolume { get; set; }
         public decimal PercentOfFill
         {

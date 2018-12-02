@@ -68,6 +68,10 @@ namespace SmartTrash.Controllers
                     _db.WasteCollectionAreas.Add(area);
                 else
                 {
+                    if (area.FilledVolume > area.Volume)
+                    {
+                        area.FilledVolume=area.Volume
+                    }
                     _db.WasteCollectionAreas.Update(area);
                 }
                 await _db.SaveChangesAsync();

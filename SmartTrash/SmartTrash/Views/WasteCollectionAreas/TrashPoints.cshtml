@@ -31,11 +31,9 @@
         <input asp-for="Volume" />
         <span asp-validation-for="Volume"></span>
     </div>
-    <div class="form-group">
-        @if (Model != null)
-        {
-            <input asp-for="FilledVolume" hidden/>
-        }
-    </div>
+    @if (Model != null)
+    {
+        <input asp-for="FilledVolume" hidden />
+    }
     <input class="btn btn-success" type="submit" value=@formButton>
 </form>
