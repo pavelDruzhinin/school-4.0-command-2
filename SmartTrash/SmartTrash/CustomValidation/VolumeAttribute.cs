@@ -13,7 +13,7 @@ namespace SmartTrash.CustomValidation
         {
             if (value != null)
             {
-                if ((float)value <= 0)
+                if ((decimal)value <= 0)
                 {
                     return new ValidationResult(GetErrorMessage());
                 }

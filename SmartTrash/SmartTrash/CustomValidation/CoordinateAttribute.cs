@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using SmartTrash.Data;
 using SmartTrash.Models;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace SmartTrash.CustomValidation
         }
         private string GetErrorMessage()
         {
-            return $"Координата введена неверно, введите новую";
+            return $"Введите другую координату";
         }
     }
 }
