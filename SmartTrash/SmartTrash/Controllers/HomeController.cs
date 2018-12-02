@@ -23,7 +23,7 @@ namespace SmartTrash.Controllers
         {
             string key = _config.GetSection("MapApiKeys").GetSection("Yandex").Value;
 
-            return View((object)key);
+            return View("Index",key);
         }
 
         public IActionResult About()
