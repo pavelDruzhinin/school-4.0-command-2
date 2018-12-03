@@ -3,3 +3,19 @@
 
 // Write your JavaScript code.
 feather.replace();
+
+function applyFilters() {
+    var table = $("#trashpoints").DataTable();
+    var url = "/areas?minFill=" + $("#fillFilter").data().from + "&maxFill=" + $("#fillFilter").data().to;
+    table.ajax.url(url);
+    table.ajax.reload();
+}
+
+function resetFilters() {
+    var slider = $("#fillFilter").data("ionRangeSlider");
+    slider.reset();
+    var table = $("#trashpoints").DataTable();
+    var url = "/areas";
+    table.ajax.url(url);
+    table.ajax.reload();
+}
