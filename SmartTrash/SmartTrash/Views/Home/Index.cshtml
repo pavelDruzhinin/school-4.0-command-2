@@ -38,7 +38,10 @@
 @section scripts
 {
     <script>
+        var points;
         $(document).ready(function() {
+            points = getPoints();
+
             $.ajax({
                     url: '/Home/GetFilters',
                     contentType: 'application/html; charset=utf-8',
@@ -48,7 +51,7 @@
                         $('#filters').html(result);
                         $("#fillFilter").ionRangeSlider({
                             type: "double",
-                            min: 1,
+                            min: 0,
                             max: 100,
                             grid: true
                         });
@@ -59,10 +62,7 @@
             });
 
             var table = $('#trashpoints').DataTable({
-                ajax: {
-                    url: "/areas",
-                    dataSrc: ""
-                },
+                data: points,
                 columns: [
                     {
                         data: 'name'
