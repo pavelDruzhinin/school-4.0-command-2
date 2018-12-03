@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#Minification css and js
+
+SmartTrash/SmartTrash/wwwroot/css/vendor.min.css
+SmartTrash/SmartTrash/wwwroot/js/vendor.min.js
+
 # User-specific files
 *.suo
 *.user
