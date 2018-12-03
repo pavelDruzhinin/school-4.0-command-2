@@ -4,7 +4,10 @@
     "inputFiles": [
       "node_modules/bootstrap/dist/css/bootstrap.min.css",
       "node_modules/bootstrap/dist/css/bootstrap.min.css",
-      "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
+      "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
+      "node_modules/ion-rangeslider/css/normalize.css",
+      "node_modules/ion-rangeslider/css/ion.rangeSlider.css",
+      "wwwroot/css/ion.rangeSlider.skinNice.css"
     ],
     "minify": { "enabled": false }
   },
@@ -16,7 +19,8 @@
       "node_modules/bootstrap/dist/js/bootstrap.min.js",
       "node_modules/feather-icons/dist/feather.min.js",
       "node_modules/datatables.net/js/jquery.dataTables.js",
-      "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js"
+      "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js",
+      "node_modules/ion-rangeslider/js/ion.rangeSlider.min.js"
     ],
     "minify": { "enabled": false }
   }
