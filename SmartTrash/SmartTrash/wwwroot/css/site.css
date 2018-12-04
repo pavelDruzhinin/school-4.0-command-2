@@ -58,16 +58,18 @@
 }
 
 .sidebar-heading {
-    font-size: .75rem;
+    font-size: 14px;
     text-transform: uppercase;
 }
 
+.sidebar-filter {
+    font-size: 14px;
+}
 /*
  * Content
  */
-
 [role="main"] {
-    padding-top: 40px; /* Space for fixed navbar */
+   padding-top: 40px;
 }
 
 #map {
