@@ -13,17 +13,9 @@ namespace SmartTrash.Controllers
 
     public class HomeController : Controller
     {
-        private IConfiguration _config;
-        public HomeController(IConfiguration config)
-        {
-            _config = config;
-        }
-
         public IActionResult Index()
         {
-            string key = _config.GetSection("MapApiKeys").GetSection("Yandex").Value;
-
-            return View("Index",key);
+            return View();
         }
 
         public IActionResult About()
