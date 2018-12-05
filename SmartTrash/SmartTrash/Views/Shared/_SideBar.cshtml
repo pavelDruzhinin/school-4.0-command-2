@@ -8,7 +8,8 @@
                     Home <span class="sr-only">(current)</span>
                 </a>
             </li>
-            @if (User.Identity.IsAuthenticated) {
+            @if (User.Identity.IsAuthenticated)
+            {
                 <li class="nav-item">
                     <a class="nav-link" href="/areas/admin">
                         <span data-feather="edit"></span>
@@ -17,13 +18,15 @@
                 </li>
             }
         </ul>
-        
+
         <div id="filters">
 
         </div>
 
-        
-
-        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-success reportButton" data-toggle="modal" data-target="#repotModal">
+            Сформировать отчет
+        </button>
+    </div>
 </nav>
 

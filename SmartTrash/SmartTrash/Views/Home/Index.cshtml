@@ -31,6 +31,11 @@
     </table>
 </div>
 
+
+
+<!-- Modal -->
+<partial name="_ModalReport" />
+
 @section scripts
     {
     <script>
@@ -54,7 +59,7 @@
 
 
             // ---- Section "Filter"
-            
+
             $.ajax({
                 url: '/Home/GetFilters',
                 contentType: 'application/html; charset=utf-8',
@@ -105,6 +110,14 @@
             });
 
             // ---- End section "Table"
+
+            // ---- Section "Report"
+
+            document.querySelector('.reportButton').addEventListener('click', function () {
+                drawReport();
+            });
+
+            // ---- End section "Report"
         });
     </script>
 

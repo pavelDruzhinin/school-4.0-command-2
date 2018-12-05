@@ -48,3 +48,23 @@ function getYandexKey() {
 
     return key;
 }
+
+function doReport(_points) {
+    var reportArray = new Array;
+    var total = 0;
+    
+    _points.forEach(function (elem) {
+        total += elem.volume;
+    });
+
+    reportArray['totalVolume'] = total;
+    reportArray['count'] = _points.length;
+
+    return reportArray;
+}
+
+function drawReport() {
+    var reportArray = doReport(points);
+    document.querySelector('.reportCount').innerHTML = reportArray['count'] + ' шт.';
+    document.querySelector('.reportVolume').innerHTML = reportArray['totalVolume'] + ' л.';
+}
