@@ -34,32 +34,27 @@
 @section scripts
     {
     <script>
-        var getYandexKey = function () {
-            var xhr = new XMLHttpRequest();
-            var urlAPIYandex = "/api/key/yandex";
-            xhr.open('GET', urlAPIYandex, false);
-            xhr.send();
-            var key = xhr.response;
-
-            return key;
-        }
-
-        yandexKey = getYandexKey();
+        var points = getPoints();
+        var yandexKey = getYandexKey();
 
         if (yandexKey === null && yandexKey === '') {
             alert('API key не получен. Загрузка карты невозможна.');
         }
-    </script>
-    <script>
-        var points;
+
         $(document).ready(function () {
+
+            // ---- Section "Load sripts for map"
+
             $.getScript("https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=" + yandexKey, function () {
                 $.getScript("./js/map.js", function () {
                 });
             });
 
-            points = getPoints();
+            // ---- End section "Load sripts for map"
 
+
+            // ---- Section "Filter"
+            
             $.ajax({
                 url: '/Home/GetFilters',
                 contentType: 'application/html; charset=utf-8',
@@ -78,6 +73,10 @@
                     console.log(status);
                 }
             });
+
+            // ---- End section "Filter"
+
+            // ---- Section "Table"
 
             var table = $('#trashpoints').DataTable({
                 language: {
@@ -104,6 +103,8 @@
                     }
                 ]
             });
+
+            // ---- End section "Table"
         });
     </script>
 

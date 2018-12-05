@@ -38,3 +38,13 @@ function resetFilters() {
     table.rows.add(points);
     table.columns.adjust().draw();
 }
+
+function getYandexKey() {
+    var xhr = new XMLHttpRequest();
+    var urlAPIYandex = "/api/key/yandex";
+    xhr.open('GET', urlAPIYandex, false);
+    xhr.send();
+    var key = xhr.response;
+
+    return key;
+}
