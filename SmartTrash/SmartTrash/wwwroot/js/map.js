@@ -10,9 +10,12 @@ function init() {
         searchControlProvider: 'yandex#search'
     });
 
-    var geoPoints = new Array;
+    addGeoPoints(points);
+}
 
-    points.forEach(function (elem) {
+function addGeoPoints(_points) {
+    removeGeoPoints();
+    _points.forEach(function (elem) {
         myPieChart = new ymaps.Placemark([
             elem.latitude, elem.longitude // dynamic
         ], {
@@ -43,4 +46,8 @@ function init() {
         myMap.geoObjects
             .add(myPieChart);
     })
+}
+
+function removeGeoPoints() {
+    myMap.geoObjects.removeAll();
 }
