@@ -21,6 +21,7 @@ namespace SmartTrash.Data
         }
 
         public DbSet<WasteCollectionArea> WasteCollectionAreas { get; set; }
+        public DbSet<GarbageTruck> GarbageTrucks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,7 @@ namespace SmartTrash.Data
 
             modelBuilder.ApplyConfiguration(new WasteCollectionAreaMap());
             modelBuilder.ApplyConfiguration(new UserRoleMap());
+            modelBuilder.ApplyConfiguration(new GarbageTruckMap());
         }
     }
 }
