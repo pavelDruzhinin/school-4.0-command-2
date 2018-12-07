@@ -25,6 +25,7 @@ function applyFilters() {
     table.clear().draw();
     table.rows.add(points);
     table.columns.adjust().draw();
+    addGeoPoints(points);
 }
 
 function resetFilters() {
@@ -37,6 +38,7 @@ function resetFilters() {
     table.clear().draw();
     table.rows.add(points);
     table.columns.adjust().draw();
+    addGeoPoints(points);
 }
 
 function getYandexKey() {
