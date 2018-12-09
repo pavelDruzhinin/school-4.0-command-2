@@ -22,6 +22,7 @@ namespace Faker
 
         public void Run()
         {
+            char key;
             UpdateWasteCollectionAreasCache();
 
             _timer = new System.Timers.Timer(1000);
@@ -30,7 +31,15 @@ namespace Faker
             _timer.AutoReset = true;
             _timer.Enabled = true;
 
-            Console.ReadLine();
+            do
+            {
+                key = Console.ReadKey().KeyChar;
+                if (key == 'p')
+                {
+                    _timer.Enabled = !_timer.Enabled;
+                    Console.WriteLine(_timer.Enabled ? "Faker resumed" : "Faker paused");
+                }
+            } while (key != 'q');
 
             _timer.Stop();
             _timer.Dispose();
