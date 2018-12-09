@@ -16,13 +16,28 @@ function init() {
 function addGeoPoints(_points) {
     removeGeoPoints();
     _points.forEach(function (elem) {
+        var colorPie;
+        var colorPieEmpty = '#f5f5f5';
+        if (elem.percentOfFill < 30) {
+            colorPie = 'green';
+        }
+        if (elem.percentOfFill >= 30 && elem.percentOfFill < 70) {
+            colorPie = 'yellow';
+        }
+        if (elem.percentOfFill >= 70) {
+            colorPie = 'red';
+        }
+        if (elem.percentOfFill == 0) {
+            colorPie = '#f5f5f5';
+        }
+        
         myPieChart = new ymaps.Placemark([
             elem.latitude, elem.longitude // dynamic
         ], {
                 // Данные для построения диаграммы.
-                data: [
-                    { weight: (100 - elem.percentOfFill), color: '#f5f5f5' }, // dynamic
-                    { weight: elem.percentOfFill, color: 'red' }, // dynamic
+            data: [
+                { weight: elem.percentOfFill, color: colorPie }, // dynamic
+                { weight: (100 - elem.percentOfFill), color: colorPieEmpty }, // dynamic
                 ],
                 balloonContent: elem.name, // dynamic
                 iconContent: Math.round(elem.percentOfFill) // dynamic
