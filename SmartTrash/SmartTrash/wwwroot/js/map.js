@@ -5,6 +5,32 @@ var cordWasteLandfill = [61.699688, 34.453655];
 // Массив меток для построения маршрута
 var pinsArray = new Array;
 
+var arrayRouteInfo = new Array;
+//arrayRouteInfo['lengthRoute'] = 0;
+//arrayRouteInfo['lengthHuman'] = 0;
+//arrayRouteInfo['time'] = 0;
+//arrayRouteInfo['timeHuman'] = 0;
+
+// Попытка обхитрить асинхронность
+//x = {
+//    aInternal: 10,
+//    aListener: function (val) { },
+//    set a(val) {
+//        this.aInternal = val;
+//        this.aListener(val);
+//    },
+//    get a() {
+//        return this.aInternal;
+//    },
+//    registerListener: function (listener) {
+//        this.aListener = listener;
+//    }
+//}
+//x.registerListener(function (val) {
+//    document.querySelector('.reportWay').innerHTML = x.a;
+//});
+
+
 ymaps.ready(init);
 
 function init() {
@@ -105,6 +131,8 @@ function removeGeoPoints() {
 }
 
 function createRoute() {
+    //var arrayRouteInfo = new Array;
+    var arrayRouteInfo1 = new Array;
     // Сортируем метки относительно Автопарка мусоровозов
     var pinsGeoQuery = ymaps.geoQuery(pinsArray);
     var pinsSorted = pinsGeoQuery.sortByDistance(cordBaseStation);
@@ -113,7 +141,7 @@ function createRoute() {
     pinsSorted._objects.forEach(function (elem) {
         arraySortCords.push(elem.geometry._coordinates);
     });
-    // Добавляем начальную, предполседнюю и последнюю точку для построения итогового маршрута
+    // Добавляем начальную, предпоследнюю и последнюю точку для построения итогового маршрута
     arraySortCords.unshift(cordBaseStation);
     arraySortCords.push(cordWasteLandfill);
     arraySortCords.push(cordBaseStation);
@@ -128,7 +156,18 @@ function createRoute() {
             strokeColor: '0000ffff',
             opacity: 0.9
         });
+
+        // x.a = route.getHumanLength();
+
+        arrayRouteInfo['lengthRoute'] = route.getLength();
+        arrayRouteInfo['lengthHuman'] = route.getHumanLength();
+        arrayRouteInfo['time'] = route.getJamsTime();
+        arrayRouteInfo['timeHuman'] = route.getHumanJamsTime();
+  
         // добавляем маршрут на карту
         myMap.geoObjects.add(route);
     });
+
+
+//    return arrayRouteInfo;
 }

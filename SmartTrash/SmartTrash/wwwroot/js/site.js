@@ -54,14 +54,20 @@ function getYandexKey() {
 function doReport(_points) {
     var reportArray = new Array;
     var total = 0;
+    // Строим маршрут и получаем его данные
+    // createRoute();
     
     _points.forEach(function (elem) {
         total += elem.volume;
     });
-
+    console.log("doReport");
+    console.log(arrayRouteInfo);
     reportArray['totalVolume'] = total;
     reportArray['count'] = _points.length;
-
+    reportArray['lengthRoute'] = arrayRouteInfo['lengthRoute'];
+    reportArray['lengthHuman'] = arrayRouteInfo['lengthHuman'];
+    reportArray['time'] = arrayRouteInfo['time'];
+    reportArray['timeHuman'] = arrayRouteInfo['timeHuman'];
     return reportArray;
 }
 
@@ -69,4 +75,7 @@ function drawReport() {
     var reportArray = doReport(points);
     document.querySelector('.reportCount').innerHTML = reportArray['count'] + ' шт.';
     document.querySelector('.reportVolume').innerHTML = reportArray['totalVolume'] + ' л.';
+    document.querySelector('.reportWay').innerHTML = reportArray['lengthHuman'];
+    document.querySelector('.reportTime').innerHTML = reportArray['timeHuman'];
 }
+

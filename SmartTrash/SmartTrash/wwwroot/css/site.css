@@ -65,7 +65,7 @@
 .sidebar-filter {
     font-size: 14px;
 }
-.reportButton {
+.reportButton, .routeButton {
     margin: 25px auto 25px;
     display: block;
 }
