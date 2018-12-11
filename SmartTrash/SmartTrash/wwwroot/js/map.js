@@ -112,17 +112,19 @@ function removeGeoPoints() {
 function createRoute() {
     // Сортируем метки относительно Автопарка мусоровозов
     var pinsGeoQuery = ymaps.geoQuery(pinsArray);
-    var pinsSorted = pinsGeoQuery.sortByDistance(cordBaseStation);
-    console.log(pinsSorted);
-    
     var arraySortCords = new Array;
-    
-    pinsSorted._objects.forEach(function (elem) {
-        // Формируем массив координат из отсортированных меток
-        arraySortCords.push(elem.geometry._coordinates);
-        // Формируем массив ID из отсортированных меток
-        arraySortIds.push(elem.properties._data.idPoint);
-    });
+    var pin = cordBaseStation;
+    do {
+        pin = pinsGeoQuery.getClosestTo(pin);
+        if (pin) {
+            // Формируем массив координат из отсортированных меток
+            arraySortCords.push(pin.geometry.getCoordinates());
+            // Формируем массив ID из отсортированных меток
+            arraySortIds.push(pin.properties._data.idPoint);
+            pinsGeoQuery = pinsGeoQuery.remove(pin);
+        }
+    } while (pin)
+    console.log(arraySortCords);
 
     //    var newPoints = JSON.parse(JSON.stringify(points))
 
