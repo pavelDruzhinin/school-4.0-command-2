@@ -4,32 +4,10 @@ var cordBaseStation = [61.757534, 34.417469];
 var cordWasteLandfill = [61.699688, 34.453655];
 // Массив меток для построения маршрута
 var pinsArray = new Array;
-
+// Массив ID из отсортированных меток
+var arraySortIds = new Array;
+// Массив для составления отчета
 var arrayRouteInfo = new Array;
-//arrayRouteInfo['lengthRoute'] = 0;
-//arrayRouteInfo['lengthHuman'] = 0;
-//arrayRouteInfo['time'] = 0;
-//arrayRouteInfo['timeHuman'] = 0;
-
-// Попытка обхитрить асинхронность
-//x = {
-//    aInternal: 10,
-//    aListener: function (val) { },
-//    set a(val) {
-//        this.aInternal = val;
-//        this.aListener(val);
-//    },
-//    get a() {
-//        return this.aInternal;
-//    },
-//    registerListener: function (listener) {
-//        this.aListener = listener;
-//    }
-//}
-//x.registerListener(function (val) {
-//    document.querySelector('.reportWay').innerHTML = x.a;
-//});
-
 
 ymaps.ready(init);
 
@@ -73,7 +51,8 @@ function addGeoPoints(_points) {
                 { weight: (100 - elem.percentOfFill), color: colorPieEmpty }, // dynamic
                 ],
                 balloonContent: elem.name, // dynamic
-                iconContent: Math.round(elem.percentOfFill) // dynamic
+                iconContent: Math.round(elem.percentOfFill), // dynamic
+                idPoint: elem.id // id мусорной площадки
             }, {
                 // Зададим произвольный макет метки.
                 iconLayout: 'default#pieChart',
@@ -131,22 +110,37 @@ function removeGeoPoints() {
 }
 
 function createRoute() {
-    //var arrayRouteInfo = new Array;
-    var arrayRouteInfo1 = new Array;
     // Сортируем метки относительно Автопарка мусоровозов
     var pinsGeoQuery = ymaps.geoQuery(pinsArray);
     var pinsSorted = pinsGeoQuery.sortByDistance(cordBaseStation);
-    // Формируем массив координат из отсортированных меток
+    console.log(pinsSorted);
+    
     var arraySortCords = new Array;
+    
     pinsSorted._objects.forEach(function (elem) {
+        // Формируем массив координат из отсортированных меток
         arraySortCords.push(elem.geometry._coordinates);
+        // Формируем массив ID из отсортированных меток
+        arraySortIds.push(elem.properties._data.idPoint);
     });
+
+    //    var newPoints = JSON.parse(JSON.stringify(points))
+
+    // Сортируем points относительно построенного маршрута
+    points.sort(function (a, b) {
+        return arraySortIds.indexOf(a.id) - arraySortIds.indexOf(b.id);
+    });
+    
     // Добавляем начальную, предпоследнюю и последнюю точку для построения итогового маршрута
     arraySortCords.unshift(cordBaseStation);
     arraySortCords.push(cordWasteLandfill);
     arraySortCords.push(cordBaseStation);
     // Строим маршрут
-    ymaps.route(arraySortCords, {
+    drawRoute(arraySortCords, true);
+}
+
+function drawRoute(_cords, _needReport) {
+    ymaps.route(_cords, {
         mapStateAutoApply: true
     }).then(function (route) {
         route.getPaths().options.set({
@@ -159,15 +153,14 @@ function createRoute() {
 
         // x.a = route.getHumanLength();
 
-        arrayRouteInfo['lengthRoute'] = route.getLength();
-        arrayRouteInfo['lengthHuman'] = route.getHumanLength();
-        arrayRouteInfo['time'] = route.getJamsTime();
-        arrayRouteInfo['timeHuman'] = route.getHumanJamsTime();
-  
+        if (_needReport) {
+            arrayRouteInfo['lengthRoute'] = route.getLength();
+            arrayRouteInfo['lengthHuman'] = route.getHumanLength();
+            arrayRouteInfo['time'] = route.getJamsTime();
+            arrayRouteInfo['timeHuman'] = route.getHumanJamsTime();
+        }
+        
         // добавляем маршрут на карту
         myMap.geoObjects.add(route);
     });
-
-
-//    return arrayRouteInfo;
 }

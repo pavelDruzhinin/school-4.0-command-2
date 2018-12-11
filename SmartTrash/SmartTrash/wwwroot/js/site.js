@@ -8,6 +8,8 @@ feather.replace();
 var TRASH_LOAD_TIME = 10 * 60;
 // Стоимость 1 км
 var COST_ONE_KM = 15;
+// Вместимость мусоровоза
+var CAPACITY_TRUCK = 18000;
 
 function getPoints(min = 0, max = 100) {
     var url = "/areas?minFill=" + min + "&maxFill=" + max;
@@ -56,19 +58,52 @@ function getYandexKey() {
     return key;
 }
 
+function calculateTotalVolume(_points) {
+    var totalVolume = 0;
+
+    _points.forEach(function (elem) {
+        totalVolume += elem.filledVolume;
+    });
+
+    return totalVolume;
+}
+
+function calculateRounds(_points) {
+    var totalVolume = 0;
+    var countRounds = 1;
+    var arrayScheduledAreas = new Array;
+    var j = 0;
+
+    for (var i = 0; i < _points.length; i++) {
+        if ((_points[i].filledVolume + totalVolume) <= CAPACITY_TRUCK) {
+            totalVolume += _points[i].filledVolume;
+            arrayScheduledAreas[j] = [countRounds, points[i].latitude, points[i].longitude, _points[i].filledVolume];
+            j++;
+        } else {
+            countRounds += 1;
+            totalVolume = 0;
+            i--;
+        }
+    }
+    console.log(arrayScheduledAreas);
+    
+    return {
+        countRounds: countRounds,
+        scheduledAreas: arrayScheduledAreas
+    };
+}
+
 function doReport(_points) {
     var reportArray = new Array;
     var totalVolume = 0;
     var timeWasteAreas = _points.length * TRASH_LOAD_TIME;
     var costRout = arrayRouteInfo['lengthRoute'] * COST_ONE_KM / 1000;
+    var objCalculateRounds = calculateRounds(_points);
 
     // Строим маршрут и получаем его данные
     // createRoute();
-    
-    _points.forEach(function (elem) {
-        totalVolume += elem.volume;
 
-    });
+    totalVolume = calculateTotalVolume(_points);
 
     reportArray['totalVolume'] = totalVolume;
     reportArray['count'] = _points.length;
@@ -78,6 +113,7 @@ function doReport(_points) {
     reportArray['timeTotal'] = Math.round(arrayRouteInfo['time'] / 60) + Math.round(timeWasteAreas / 60);
     reportArray['timeRoute'] = Math.round(arrayRouteInfo['time'] / 60);
     reportArray['timeWasteAreas'] = Math.round(timeWasteAreas / 60);
+    reportArray['countRounds'] = objCalculateRounds.countRounds;
     return reportArray;
 }
 
@@ -90,5 +126,6 @@ function drawReport() {
     document.querySelector('.reportTimeRoute').innerHTML = reportArray['timeRoute'] + ' мин.';
     document.querySelector('.reportTimeWasteAreas').innerHTML = reportArray['timeWasteAreas'] + ' мин.';
     document.querySelector('.reportCost').innerHTML = reportArray['costRoute'] + ' руб.';
+    document.querySelector('.reportCountRounds').innerHTML = reportArray['countRounds'] + ' шт.';
 }
 
