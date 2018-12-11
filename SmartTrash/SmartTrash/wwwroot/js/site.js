@@ -4,6 +4,11 @@
 // Write your JavaScript code.
 feather.replace();
 
+// Время, затрачиваемое на 1 мусорную площадку в секундах
+var TRASH_LOAD_TIME = 10 * 60;
+// Стоимость 1 км
+var COST_ONE_KM = 15;
+
 function getPoints(min = 0, max = 100) {
     var url = "/areas?minFill=" + min + "&maxFill=" + max;
     var result =
@@ -53,15 +58,26 @@ function getYandexKey() {
 
 function doReport(_points) {
     var reportArray = new Array;
-    var total = 0;
+    var totalVolume = 0;
+    var timeWasteAreas = _points.length * TRASH_LOAD_TIME;
+    var costRout = arrayRouteInfo['lengthRoute'] * COST_ONE_KM / 1000;
+
+    // Строим маршрут и получаем его данные
+    // createRoute();
     
     _points.forEach(function (elem) {
-        total += elem.volume;
+        totalVolume += elem.volume;
+
     });
 
-    reportArray['totalVolume'] = total;
+    reportArray['totalVolume'] = totalVolume;
     reportArray['count'] = _points.length;
-
+    reportArray['costRoute'] = Math.round(costRout);
+    reportArray['lengthHuman'] = arrayRouteInfo['lengthHuman'];
+    // Время маршрута + время на загрузку мусора, округленное до минут
+    reportArray['timeTotal'] = Math.round(arrayRouteInfo['time'] / 60) + Math.round(timeWasteAreas / 60);
+    reportArray['timeRoute'] = Math.round(arrayRouteInfo['time'] / 60);
+    reportArray['timeWasteAreas'] = Math.round(timeWasteAreas / 60);
     return reportArray;
 }
 
@@ -69,4 +85,10 @@ function drawReport() {
     var reportArray = doReport(points);
     document.querySelector('.reportCount').innerHTML = reportArray['count'] + ' шт.';
     document.querySelector('.reportVolume').innerHTML = reportArray['totalVolume'] + ' л.';
+    document.querySelector('.reportWay').innerHTML = reportArray['lengthHuman'];
+    document.querySelector('.reportTime').innerHTML = reportArray['timeTotal'] + ' мин.';
+    document.querySelector('.reportTimeRoute').innerHTML = reportArray['timeRoute'] + ' мин.';
+    document.querySelector('.reportTimeWasteAreas').innerHTML = reportArray['timeWasteAreas'] + ' мин.';
+    document.querySelector('.reportCost').innerHTML = reportArray['costRoute'] + ' руб.';
 }
+
