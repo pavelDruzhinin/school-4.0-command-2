@@ -14,8 +14,15 @@ var CAPACITY_TRUCK = 18000;
 var colors = [
     '#0000c7',
     '#ff0a81',
+    '#FF0000',
+    '#ff7518',
     '#7ba05b',
+    '#a14040',
+    '#000080',
     '#88f000',
+    '#FFFF00',
+    '#e37134',
+    '#5e3639',
     '#4fa1b0'
 ];
 
@@ -150,8 +157,8 @@ function doReport(_points) {
     var totalVolume = 0;
     var timeWasteAreas = _points.length * TRASH_LOAD_TIME;
     var costRout = arrayRouteInfo['lengthRoute'] * COST_ONE_KM / 1000;
-   // var objCalculateRounds = calculateRounds(_points);
-    drawCustomRoute();
+    var objCalculateRounds = calculateRounds(_points);
+    drawCustomRoute(objCalculateRounds.scheduledAreas);
     // Строим маршрут и получаем его данные
     // createRoute();
 

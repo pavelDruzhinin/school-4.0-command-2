@@ -141,9 +141,8 @@ function createRoute() {
     //drawRoute(arraySortCords, true);
 }
 
-function drawCustomRoute() {
-    var arrayRounds = calculateRounds(points);
-    var arrayCords = generateFinalRoute(arrayRounds.scheduledAreas);
+function drawCustomRoute(_scheduledAreas) {
+    var arrayCords = generateFinalRoute(_scheduledAreas);
     arrayCords.forEach(function (elem) {
         drawRoute(elem, true);
     });
