@@ -126,29 +126,22 @@ function createRoute() {
     } while (pin)
     console.log(arraySortCords);
 
-    //    var newPoints = JSON.parse(JSON.stringify(points))
-
     // Сортируем points относительно построенного маршрута
     points.sort(function (a, b) {
         return arraySortIds.indexOf(a.id) - arraySortIds.indexOf(b.id);
     });
-    
-    // Добавляем начальную, предпоследнюю и последнюю точку для построения итогового маршрута
-    arraySortCords.unshift(cordBaseStation);
-    arraySortCords.push(cordWasteLandfill);
-    arraySortCords.push(cordBaseStation);
-    // Строим маршрут
-    //drawRoute(arraySortCords, true);
+
+    // Подсчитываем количество рейсов
+    var objRounds = calculateRounds(points);
+    // Формируем итоговый маршрут с учетом заезда на полигон ТБО между рейсами
+    var finalCords = generateFinalRoute(objRounds.scheduledAreas);
+
+    // Рисуем маршрут
+    drawRoute(finalCords.arrayNewRouteCords, finalCords.arrayIndexRound);
 }
 
-function drawCustomRoute(_scheduledAreas) {
-    var arrayCords = generateFinalRoute(_scheduledAreas);
-    arrayCords.forEach(function (elem) {
-        drawRoute(elem, true);
-    });
-}
-
-function drawRoute(_cords, _needReport) {
+function drawRoute(_cords, _index) {
+    var defaultColor = getRandomValue(colors);
     ymaps.route(_cords, {
         mapStateAutoApply: true
     }).then(function (route) {
@@ -156,18 +149,27 @@ function drawRoute(_cords, _needReport) {
             // в балуне выводим только информацию о времени движения с учетом пробок
             balloonContentBodyLayout: ymaps.templateLayoutFactory.createClass('$[properties.humanJamsTime]'),
             // можно выставить настройки графики маршруту
-            strokeColor: getRandomValue(colors),
+            strokeColor: defaultColor,
             opacity: 0.9
         });
 
-        // x.a = route.getHumanLength();
+        // Красим каждый рейс в свой цвет
+        var countPath = route.getPaths().getLength();
+        _index.push(countPath);
+        var startIndex = 0;
+        for (var m = 0; m < _index.length; m++) {
+            var color = getRandomValue(colors);
+            for (var i = startIndex; i < _index[m]; i++) {
+                myRoute = route.getPaths().get(i);
+                myRoute.options.set('strokeColor', color);
+            }
+            startIndex = _index[m];
+        }
 
-        if (_needReport) {
             arrayRouteInfo['lengthRoute'] = route.getLength();
             arrayRouteInfo['lengthHuman'] = route.getHumanLength();
             arrayRouteInfo['time'] = route.getJamsTime();
             arrayRouteInfo['timeHuman'] = route.getHumanJamsTime();
-        }
         
         // добавляем маршрут на карту
         myMap.geoObjects.add(route);

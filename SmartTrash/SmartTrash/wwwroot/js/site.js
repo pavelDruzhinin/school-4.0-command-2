@@ -110,9 +110,7 @@ function calculateRounds(_points) {
             i--;
         }
     }
-    //console.log(arrayScheduledAreas);
-    //console.log(arrayScheduledAreasTotal);
-    //generateFinalRoute(arrayScheduledAreas);
+
     return {
         countRounds: countRounds,
         scheduledAreas: arrayScheduledAreas
@@ -121,35 +119,32 @@ function calculateRounds(_points) {
 
 function generateFinalRoute(_arraySchdldAr) {
     var arrayNewRouteCords = new Array;
-    var tAr = new Array;   
-    var arraySlice = [0];
+    var arrayIndexRound = new Array;
 
     for (var i = 0, j = 1; i < _arraySchdldAr.length; i++) {
         if (_arraySchdldAr[i][0] != j) {
-            arraySlice.push(i);
+            _arraySchdldAr.splice(i, 0, [999, cordWasteLandfill[0], cordWasteLandfill[1], 999]);
+            arrayIndexRound.push(i);
+            i++;
             j++;
         }
-        if (i == (_arraySchdldAr.length - 1)) {
-            arraySlice.push(++i)
-        }
     }
-    for (var i = 1; i < arraySlice.length; i++) {
+    for (var i = 0; i < _arraySchdldAr.length; i++) {
         var tArSl = [];
-        // Делим массив _arraySchdldAr на масивы для кадого рейса
-        tAr = _arraySchdldAr.slice(arraySlice[i - 1], arraySlice[i]);
         // вырезаем индекс рейса и объем, оставляя только координаты
-        for (j = 0; j < tAr.length; j++) {
-            tArSl[j] = tAr[j].slice(1, 3);
-        }
-
-        tArSl.unshift(cordBaseStation);
-        tArSl.push(cordWasteLandfill);
-        tArSl.push(cordBaseStation);
+        tArSl = _arraySchdldAr[i].slice(1, 3);
         // Формируем итоговый массив координат
         arrayNewRouteCords.push(tArSl);
     }
-    console.log(arrayNewRouteCords);
-    return arrayNewRouteCords;
+    arrayNewRouteCords.unshift(cordBaseStation);
+    arrayNewRouteCords.push(cordWasteLandfill);
+    arrayNewRouteCords.push(cordBaseStation);
+    //console.log(arrayNewRouteCords);
+    //console.log(arrayIndexRound);
+    return {
+        arrayNewRouteCords: arrayNewRouteCords,
+        arrayIndexRound: arrayIndexRound
+    };
 }
 
 function doReport(_points) {
@@ -158,13 +153,10 @@ function doReport(_points) {
     var timeWasteAreas = _points.length * TRASH_LOAD_TIME;
     var costRout = arrayRouteInfo['lengthRoute'] * COST_ONE_KM / 1000;
     var objCalculateRounds = calculateRounds(_points);
-    drawCustomRoute(objCalculateRounds.scheduledAreas);
-    // Строим маршрут и получаем его данные
-    // createRoute();
 
     totalVolume = calculateTotalVolume(_points);
 
-    reportArray['totalVolume'] = totalVolume;
+    reportArray['totalVolume'] = Math.round(totalVolume);
     reportArray['count'] = _points.length;
     reportArray['costRoute'] = Math.round(costRout);
     reportArray['lengthHuman'] = arrayRouteInfo['lengthHuman'];
@@ -172,7 +164,7 @@ function doReport(_points) {
     reportArray['timeTotal'] = Math.round(arrayRouteInfo['time'] / 60) + Math.round(timeWasteAreas / 60);
     reportArray['timeRoute'] = Math.round(arrayRouteInfo['time'] / 60);
     reportArray['timeWasteAreas'] = Math.round(timeWasteAreas / 60);
- //   reportArray['countRounds'] = objCalculateRounds.countRounds;
+    reportArray['countRounds'] = objCalculateRounds.countRounds;
     return reportArray;
 }
 
@@ -187,4 +179,3 @@ function drawReport() {
     document.querySelector('.reportCost').innerHTML = reportArray['costRoute'] + ' руб.';
     document.querySelector('.reportCountRounds').innerHTML = reportArray['countRounds'] + ' шт.';
 }
-
