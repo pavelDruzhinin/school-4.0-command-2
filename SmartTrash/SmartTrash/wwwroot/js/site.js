@@ -173,9 +173,18 @@ function drawReport() {
     document.querySelector('.reportCount').innerHTML = reportArray['count'] + ' шт.';
     document.querySelector('.reportVolume').innerHTML = reportArray['totalVolume'] + ' л.';
     document.querySelector('.reportWay').innerHTML = reportArray['lengthHuman'];
-    document.querySelector('.reportTime').innerHTML = reportArray['timeTotal'] + ' мин.';
-    document.querySelector('.reportTimeRoute').innerHTML = reportArray['timeRoute'] + ' мин.';
-    document.querySelector('.reportTimeWasteAreas').innerHTML = reportArray['timeWasteAreas'] + ' мин.';
+    document.querySelector('.reportTime').innerHTML = humanTime(reportArray['timeTotal']);
+    document.querySelector('.reportTimeRoute').innerHTML = humanTime(reportArray['timeRoute']);
+    document.querySelector('.reportTimeWasteAreas').innerHTML = humanTime(reportArray['timeWasteAreas']);
     document.querySelector('.reportCost').innerHTML = reportArray['costRoute'] + ' руб.';
     document.querySelector('.reportCountRounds').innerHTML = reportArray['countRounds'] + ' шт.';
+}
+
+function humanTime(time) {
+    var result;
+    var mins = time % 60;
+    var hours = (time - mins) / 60;
+    if (mins < 10) mins = '0' + mins;
+    result = hours + ' ч. ' + mins + ' мин.';
+    return result;
 }
