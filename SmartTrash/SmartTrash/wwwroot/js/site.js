@@ -77,7 +77,13 @@ function calculateRounds(_points) {
     for (var i = 0; i < _points.length; i++) {
         if ((_points[i].filledVolume + totalVolume) <= CAPACITY_TRUCK) {
             totalVolume += _points[i].filledVolume;
-            arrayScheduledAreas[j] = [countRounds, points[i].latitude, points[i].longitude, _points[i].filledVolume];
+            arrayScheduledAreas[j] =
+                [
+                    countRounds,
+                    _points[i].latitude,
+                    _points[i].longitude, 
+                    _points[i].filledVolume
+                ];
             j++;
         } else {
             countRounds += 1;
@@ -86,11 +92,40 @@ function calculateRounds(_points) {
         }
     }
     console.log(arrayScheduledAreas);
-    
+    //console.log(arrayScheduledAreasTotal);
+    generateFinalRoute(arrayScheduledAreas);
     return {
         countRounds: countRounds,
         scheduledAreas: arrayScheduledAreas
     };
+}
+
+function generateFinalRoute(_arraySchdldAr) {
+    var arrayNewRouteCords = new Array;
+    var tAr = new Array;   
+    var arraySlice = [0];
+
+    for (var i = 0, j = 1; i < _arraySchdldAr.length; i++) {
+        if (_arraySchdldAr[i][0] != j) {
+            arraySlice.push(i);
+            j++;
+        }
+        if (i == (_arraySchdldAr.length - 1)) {
+            arraySlice.push(++i)
+        }
+    }
+    for (var i = 1; i < arraySlice.length; i++) {
+        var tArSl = [];
+        // Делим массив _arraySchdldAr на масивы для кадого рейса
+        tAr = _arraySchdldAr.slice(arraySlice[i - 1], arraySlice[i]);
+        // вырезаем индекс рейса и объем, оставляя только координаты
+        for (j = 0; j < tAr.length; j++) {
+            tArSl[j] = tAr[j].slice(1, 3);
+        }
+        // Формируем итоговый массив координат
+        arrayNewRouteCords.push(tArSl);
+    }
+    console.log(arrayNewRouteCords);
 }
 
 function doReport(_points) {
