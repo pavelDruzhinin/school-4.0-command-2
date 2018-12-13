@@ -11,6 +11,18 @@ var COST_ONE_KM = 15;
 // Вместимость мусоровоза
 var CAPACITY_TRUCK = 18000;
 
+var colors = [
+    '#0000c7',
+    '#ff0a81',
+    '#7ba05b',
+    '#88f000',
+    '#4fa1b0'
+];
+
+function getRandomValue(arr){
+    return arr[Math.floor(Math.random() * arr.length)];
+};
+
 function getPoints(min = 0, max = 100) {
     var url = "/areas?minFill=" + min + "&maxFill=" + max;
     var result =
@@ -91,9 +103,9 @@ function calculateRounds(_points) {
             i--;
         }
     }
-    console.log(arrayScheduledAreas);
+    //console.log(arrayScheduledAreas);
     //console.log(arrayScheduledAreasTotal);
-    generateFinalRoute(arrayScheduledAreas);
+    //generateFinalRoute(arrayScheduledAreas);
     return {
         countRounds: countRounds,
         scheduledAreas: arrayScheduledAreas
@@ -122,10 +134,15 @@ function generateFinalRoute(_arraySchdldAr) {
         for (j = 0; j < tAr.length; j++) {
             tArSl[j] = tAr[j].slice(1, 3);
         }
+
+        tArSl.unshift(cordBaseStation);
+        tArSl.push(cordWasteLandfill);
+        tArSl.push(cordBaseStation);
         // Формируем итоговый массив координат
         arrayNewRouteCords.push(tArSl);
     }
     console.log(arrayNewRouteCords);
+    return arrayNewRouteCords;
 }
 
 function doReport(_points) {
@@ -133,8 +150,8 @@ function doReport(_points) {
     var totalVolume = 0;
     var timeWasteAreas = _points.length * TRASH_LOAD_TIME;
     var costRout = arrayRouteInfo['lengthRoute'] * COST_ONE_KM / 1000;
-    var objCalculateRounds = calculateRounds(_points);
-
+   // var objCalculateRounds = calculateRounds(_points);
+    drawCustomRoute();
     // Строим маршрут и получаем его данные
     // createRoute();
 
@@ -148,7 +165,7 @@ function doReport(_points) {
     reportArray['timeTotal'] = Math.round(arrayRouteInfo['time'] / 60) + Math.round(timeWasteAreas / 60);
     reportArray['timeRoute'] = Math.round(arrayRouteInfo['time'] / 60);
     reportArray['timeWasteAreas'] = Math.round(timeWasteAreas / 60);
-    reportArray['countRounds'] = objCalculateRounds.countRounds;
+ //   reportArray['countRounds'] = objCalculateRounds.countRounds;
     return reportArray;
 }
 

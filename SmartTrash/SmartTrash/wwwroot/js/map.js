@@ -138,7 +138,15 @@ function createRoute() {
     arraySortCords.push(cordWasteLandfill);
     arraySortCords.push(cordBaseStation);
     // Строим маршрут
-    drawRoute(arraySortCords, true);
+    //drawRoute(arraySortCords, true);
+}
+
+function drawCustomRoute() {
+    var arrayRounds = calculateRounds(points);
+    var arrayCords = generateFinalRoute(arrayRounds.scheduledAreas);
+    arrayCords.forEach(function (elem) {
+        drawRoute(elem, true);
+    });
 }
 
 function drawRoute(_cords, _needReport) {
@@ -149,7 +157,7 @@ function drawRoute(_cords, _needReport) {
             // в балуне выводим только информацию о времени движения с учетом пробок
             balloonContentBodyLayout: ymaps.templateLayoutFactory.createClass('$[properties.humanJamsTime]'),
             // можно выставить настройки графики маршруту
-            strokeColor: '0000ffff',
+            strokeColor: getRandomValue(colors),
             opacity: 0.9
         });
 
