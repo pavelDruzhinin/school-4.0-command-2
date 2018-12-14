@@ -73,6 +73,19 @@
                         max: 100,
                         grid: true
                     });
+                    $('#autoUpdateToggle').change(function () {
+                        console.log("Checkbox clicked");
+                        if ($('#autoUpdateToggle').prop("checked")) {
+                            timerId = setInterval(function () {
+                                applyFilters();
+                                console.log("applied");
+                            }, 3000);
+                            console.log("Updates enabled");
+                        } else {
+                            clearInterval(timerId);
+                            console.log("Update disabled");
+                        }
+                    });
                 },
                 error: function (status) {
                     console.log(status);
@@ -119,9 +132,7 @@
 
             // ---- End section "Report"
 
-            //setInterval(function () {
-            //    applyFilters();
-            //}, 3000);
+
         });
     </script>
 
