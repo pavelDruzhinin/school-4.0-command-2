@@ -126,6 +126,14 @@ namespace SmartTrash.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [HttpGet]
+        [Route("truckselector")]
+        public async Task<IActionResult> TruckSelectorPartial()
+        {
+            return PartialView("_TruckSelectorPartial", await _context.GarbageTrucks.ToListAsync());
+        }
+
         private bool GarbageTruckExists(int id)
         {
             return _context.GarbageTrucks.Any(e => e.Id == id);

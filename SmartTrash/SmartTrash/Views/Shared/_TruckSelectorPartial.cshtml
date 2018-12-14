@@ -1,0 +1,34 @@
+﻿@model IEnumerable<SmartTrash.Models.GarbageTruck>
+
+@{ 
+
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Номер</th>
+            <th>Модель</th>
+            <th>Объём, л.</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach(var item in Model) {
+    <tr>
+        <td>
+            <input type="radio" name="choosedTruck" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberPlate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Volume)
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

@@ -109,6 +109,11 @@ function removeGeoPoints() {
     myMap.geoObjects.removeAll();
 }
 
+function getSelectedTruck() {
+    var selected_truck = $('input[name=choosedTruck]:choosed');
+    return selected_truck;
+}
+
 function createRoute() {
     // Сортируем метки относительно Автопарка мусоровозов
     var pinsGeoQuery = ymaps.geoQuery(pinsArray);
