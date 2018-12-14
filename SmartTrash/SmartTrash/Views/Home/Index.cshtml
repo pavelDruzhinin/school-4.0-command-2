@@ -61,12 +61,12 @@
             // ---- Section "Filter"
 
             $.ajax({
-                url: '/Home/GetFilters',
+                url: '/Home/GetSideBarPartial',
                 contentType: 'application/html; charset=utf-8',
                 type: 'GET',
                 dataType: 'html',
                 success: function (result) {
-                    $('#filters').html(result);
+                    $('#sideBarPartial').html(result);
                     $("#fillFilter").ionRangeSlider({
                         type: "double",
                         min: 0,
@@ -85,6 +85,9 @@
                             clearInterval(timerId);
                             console.log("Update disabled");
                         }
+                    });
+                    document.querySelector('.reportButton').addEventListener('click', function () {
+                        drawReport();
                     });
                 },
                 error: function (status) {
@@ -126,9 +129,7 @@
 
             // ---- Section "Report"
 
-            document.querySelector('.reportButton').addEventListener('click', function () {
-                drawReport();
-            });
+
 
             // ---- End section "Report"
 

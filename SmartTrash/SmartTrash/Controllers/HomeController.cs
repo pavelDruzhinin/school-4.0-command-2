@@ -43,9 +43,9 @@ namespace SmartTrash.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult GetFilters()
+        public IActionResult GetSideBarPartial()
         {
-            return PartialView("_Filters");
+            return PartialView("_HomeSideBarPartial");
         }
     }
 }

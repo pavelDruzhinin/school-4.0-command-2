@@ -1,0 +1,52 @@
+﻿<div id="filters" class="filters px-3 mt-4 mb-1">
+
+    <h6 class="sidebar-heading text-muted">
+        <span>Фильтры</span>
+    </h6>
+
+    <div class="fillFilterContainer">
+        <h6 class="sidebar-filter">
+            <span>Наполненность:</span>
+        </h6>
+
+        <input type="text" id="fillFilter" name="fillFilter" value="" />
+    </div>
+
+    <div class="mt-3">
+        <table class=buttons>
+            <tr>
+                <td>
+                    <button class="btn btn-sm btn-outline-secondary mx-1 my-1" onclick="applyFilters()">Применить</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-sm btn-outline-secondary mx-1 my-1" onclick="resetFilters()">Сбросить</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="mt-3 custom-control custom-checkbox">
+        <input type="checkbox" class="mx-1 custom-control-input" id="autoUpdateToggle">
+        <label class="mx-1 custom-control-label" for="autoUpdateToggle">Автоматически обновлять данные</label>
+    </div>
+
+
+
+
+    <div class="mt-3">
+        <table class=buttons>
+            <tr>
+                <td>
+                    <button class="btn btn-sm btn-outline-secondary mx-1 my-1 routeButton" onclick="createRoute()">Построить маршрут</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-sm btn-outline-secondary mx-1 my-1 reportButton" data-toggle="modal" data-target="#repotModal">Сформировать отчет</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
