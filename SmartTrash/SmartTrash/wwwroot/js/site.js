@@ -184,7 +184,11 @@ function humanTime(time) {
     var result;
     var mins = time % 60;
     var hours = (time - mins) / 60;
+    var hoursText = '';
     if (mins < 10) mins = '0' + mins;
-    result = hours + ' ч. ' + mins + ' мин.';
+    if (hours) {
+        hoursText = hours + ' ч. ';
+    }
+    result = hoursText + mins + ' мин.';
     return result;
 }
