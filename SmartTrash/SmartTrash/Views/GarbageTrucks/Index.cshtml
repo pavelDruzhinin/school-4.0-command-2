@@ -1,0 +1,50 @@
+﻿@model IEnumerable<SmartTrash.Models.GarbageTruck>
+
+@{
+    ViewData["Title"] = "Спец. техника";
+}
+
+<h2>Спец. техника</h2>
+
+<p>
+    <a asp-action="Create">Добавить спец. технику</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Регистрационный номер
+            </th>
+            <th>
+                Модель
+            </th>
+            <th>
+                Объём кузова с учётом уплотнения л.
+            </th>
+            <th>
+                Стоимость обслуживания (руб. на км. пути)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberPlate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaintananceCostFactor)
+            </td>
+            <td><a href="admin/edit/@(item.Id)" class="btn btn-warning">Редактировать</a></td>
+            <td><a href="admin/del/@(item.Id)" class="btn btn-warning">Удалить</a></td>
+        </tr>
+}
+    </tbody>
+</table>
