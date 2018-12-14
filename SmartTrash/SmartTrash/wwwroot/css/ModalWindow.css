@@ -1,0 +1,14 @@
+﻿.Window {
+    border-color: black;
+    border-width: thick;
+}
+.modalHeadStyle{
+    background-color:lightgrey;
+    border-color:black;
+    border-width:medium;
+}
+.modalFootStyle{
+    background-color:lightgrey;
+    border-color:black;
+    border-width:thin;
+}
