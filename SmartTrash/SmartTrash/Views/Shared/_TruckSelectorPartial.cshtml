@@ -14,21 +14,26 @@
         </tr>
     </thead>
     <tbody>
+@{ var i = 1; }
 @foreach(var item in Model) {
-    <tr>
+    <tr class="truckItem-@i">
         <td>
             <input type="radio" name="choosedTruck" />
         </td>
-        <td>
+        <td class="truckNumberPlate">
             @Html.DisplayFor(modelItem => item.NumberPlate)
         </td>
-        <td>
+        <td class="truckModel">
             @Html.DisplayFor(modelItem => item.Model)
         </td>
-        <td>
+        <td class="truckVolume">
             @Html.DisplayFor(modelItem => item.Volume)
         </td>
+        <td class="truckCost">
+            @Html.DisplayFor(modelItem => item.MaintananceCostFactor)
+        </td>
     </tr>
+    i++; 
 }
     </tbody>
 </table>

@@ -59,14 +59,22 @@
             // ---- End section "Load sripts for map"
 
             // ---- Section "Garbage truck selection"
+            function deleteDirty(_str) {
+                return _str.replace(/\n/ig, '').replace(/\s+/g, ' ').trim()
+            }
+
             $.ajax({
                 url: '/garbagetrucks/truckselector',
                 contentType: 'application/html; charset=utf-8',
                 type: 'GET',
                 dataType: 'html',
                 success: function (result) {
-                    console.log(result);
                     $('#trackSelectorTable').html(result);
+                    defaultTruck.numberPlate = deleteDirty($(result).find('.truckItem-1 .truckNumberPlate').html());
+                    defaultTruck.model = deleteDirty($(result).find('.truckItem-1 .truckModel').html());
+                    defaultTruck.volume = deleteDirty($(result).find('.truckItem-1 .truckVolume').html());
+                    defaultTruck.cost = deleteDirty($(result).find('.truckItem-1 .truckCost').html());
+                    console.log(defaultTruck); 
                 },
                 error: function (status) {
                     console.log(status);

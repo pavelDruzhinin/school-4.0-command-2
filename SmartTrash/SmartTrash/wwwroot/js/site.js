@@ -6,10 +6,14 @@ feather.replace();
 
 // Время, затрачиваемое на 1 мусорную площадку в секундах
 var TRASH_LOAD_TIME = 10 * 60;
-// Стоимость 1 км
-var COST_ONE_KM = 15;
-// Вместимость мусоровоза
-var CAPACITY_TRUCK = 18000;
+
+// Мусоровоз выбранный по умолчанию
+var defaultTruck = {
+    numberPlate: '',
+    model: '',
+    volume: 0,
+    cost: 0
+};
 
 var colors = [
     '#0000c7',
@@ -94,7 +98,7 @@ function calculateRounds(_points) {
     var j = 0;
 
     for (var i = 0; i < _points.length; i++) {
-        if ((_points[i].filledVolume + totalVolume) <= CAPACITY_TRUCK) {
+        if ((_points[i].filledVolume + totalVolume) <= defaultTruck.volume) {
             totalVolume += _points[i].filledVolume;
             arrayScheduledAreas[j] =
                 [
@@ -151,7 +155,7 @@ function doReport(_points) {
     var reportArray = new Array;
     var totalVolume = 0;
     var timeWasteAreas = _points.length * TRASH_LOAD_TIME;
-    var costRout = arrayRouteInfo['lengthRoute'] * COST_ONE_KM / 1000;
+    var costRout = arrayRouteInfo['lengthRoute'] * defaultTruck.cost / 1000;
     var objCalculateRounds = calculateRounds(_points);
 
     totalVolume = calculateTotalVolume(_points);
