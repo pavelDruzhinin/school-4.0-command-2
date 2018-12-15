@@ -183,11 +183,18 @@
 }
 
 .buttons {
-    width: 70%;
+    width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
 }
 
 .buttons button {
         width: 100%;
+}
+
+ul.reportList {
+    font-size: 18px;
+}
+div#trackSelectorTable {
+    font-size: 18px;
 }

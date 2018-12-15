@@ -91,13 +91,33 @@ function calculateTotalVolume(_points) {
     return totalVolume;
 }
 
+//function bigTrash(_point, _truckFreeVolume, _arrayCord) {
+//    var currentVolumeTrash = _point.filledVolume - _truckFreeVolume;
+//    if (currentVolumeTrash > truck.volume) {
+//        var rounds = currentVolumeTrash / _truckVolume + 1;
+//    } else {
+//        _arrayCord.push([
+//            999,
+//            cordWasteLandfill[0],
+//            cordWasteLandfill[1],
+//            999
+//        ]);
+//        _arrayCord.push([
+//            999,
+//            _point.latitude,
+//            _point.longitude,
+//            999
+//        ]);
+//    }
+//}
 function calculateRounds(_points) {
     var totalVolume = 0;
     var countRounds = 1;
     var arrayScheduledAreas = new Array;
     var j = 0;
-
+    console.log("calculateRounds");
     for (var i = 0; i < _points.length; i++) {
+        console.log("calculateRounds for");
         if ((_points[i].filledVolume + totalVolume) <= truck.volume) {
             totalVolume += _points[i].filledVolume;
             arrayScheduledAreas[j] =
@@ -114,7 +134,8 @@ function calculateRounds(_points) {
             i--;
         }
     }
-
+    console.log(countRounds);
+    console.log(totalVolume);
     return {
         countRounds: countRounds,
         scheduledAreas: arrayScheduledAreas

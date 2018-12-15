@@ -46,9 +46,9 @@ function addGeoPoints(_points) {
             elem.latitude, elem.longitude // dynamic
         ], {
                 // Данные для построения диаграммы.
-            data: [
-                { weight: elem.percentOfFill, color: colorPie }, // dynamic
-                { weight: (100 - elem.percentOfFill), color: colorPieEmpty }, // dynamic
+                data: [
+                    { weight: elem.percentOfFill, color: colorPie }, // dynamic
+                    { weight: (100 - elem.percentOfFill), color: colorPieEmpty }, // dynamic
                 ],
                 balloonContent: elem.name, // dynamic
                 iconContent: Math.round(elem.percentOfFill), // dynamic
