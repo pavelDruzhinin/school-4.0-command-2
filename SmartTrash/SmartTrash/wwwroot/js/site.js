@@ -8,7 +8,7 @@ feather.replace();
 var TRASH_LOAD_TIME = 10 * 60;
 
 // Мусоровоз выбранный по умолчанию
-var defaultTruck = {
+var truck = {
     numberPlate: '',
     model: '',
     volume: 0,
@@ -98,7 +98,7 @@ function calculateRounds(_points) {
     var j = 0;
 
     for (var i = 0; i < _points.length; i++) {
-        if ((_points[i].filledVolume + totalVolume) <= defaultTruck.volume) {
+        if ((_points[i].filledVolume + totalVolume) <= truck.volume) {
             totalVolume += _points[i].filledVolume;
             arrayScheduledAreas[j] =
                 [
@@ -155,7 +155,7 @@ function doReport(_points) {
     var reportArray = new Array;
     var totalVolume = 0;
     var timeWasteAreas = _points.length * TRASH_LOAD_TIME;
-    var costRout = arrayRouteInfo['lengthRoute'] * defaultTruck.cost / 1000;
+    var costRout = arrayRouteInfo['lengthRoute'] * truck.cost / 1000;
     var objCalculateRounds = calculateRounds(_points);
 
     totalVolume = calculateTotalVolume(_points);
@@ -182,6 +182,10 @@ function drawReport() {
     document.querySelector('.reportTimeWasteAreas').innerHTML = humanTime(reportArray['timeWasteAreas']);
     document.querySelector('.reportCost').innerHTML = reportArray['costRoute'] + ' руб.';
     document.querySelector('.reportCountRounds').innerHTML = reportArray['countRounds'] + ' шт.';
+    document.querySelector('.reportTruckModel').innerHTML = truck.model;
+    document.querySelector('.reportTruckVolume').innerHTML = truck.volume + ' л.';
+    document.querySelector('.reportTruckNumber').innerHTML = truck.numberPlate;
+    document.querySelector('.reportTruckCost').innerHTML = truck.cost + ' руб.';
 }
 
 function humanTime(time) {
@@ -195,4 +199,12 @@ function humanTime(time) {
     }
     result = hoursText + mins + ' мин.';
     return result;
+}
+
+function deleteDirty(_str) {
+    return _str.replace(/\n/ig, '').replace(/\s+/g, ' ').trim()
+}
+function convertFloat(_str) {
+    var str = deleteDirty(_str);
+    return parseFloat(str.replace(",", "."));
 }

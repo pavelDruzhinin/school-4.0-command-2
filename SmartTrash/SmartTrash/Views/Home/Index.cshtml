@@ -59,9 +59,6 @@
             // ---- End section "Load sripts for map"
 
             // ---- Section "Garbage truck selection"
-            function deleteDirty(_str) {
-                return _str.replace(/\n/ig, '').replace(/\s+/g, ' ').trim()
-            }
 
             $.ajax({
                 url: '/garbagetrucks/truckselector',
@@ -70,11 +67,12 @@
                 dataType: 'html',
                 success: function (result) {
                     $('#trackSelectorTable').html(result);
-                    defaultTruck.numberPlate = deleteDirty($(result).find('.truckItem-1 .truckNumberPlate').html());
-                    defaultTruck.model = deleteDirty($(result).find('.truckItem-1 .truckModel').html());
-                    defaultTruck.volume = deleteDirty($(result).find('.truckItem-1 .truckVolume').html());
-                    defaultTruck.cost = deleteDirty($(result).find('.truckItem-1 .truckCost').html());
-                    console.log(defaultTruck); 
+                    truck.numberPlate = deleteDirty($(result).find('.truckItem-1 .truckNumberPlate').html());
+                    truck.model = deleteDirty($(result).find('.truckItem-1 .truckModel').html());
+                    truck.volume = convertFloat($(result).find('.truckItem-1 .truckVolume').html());
+                    truck.cost = convertFloat($(result).find('.truckItem-1 .truckCost').html());
+                    $(".truckItem-1 input[name=choosedTruck]").attr("checked", true);
+                    console.log(truck); 
                 },
                 error: function (status) {
                     console.log(status);

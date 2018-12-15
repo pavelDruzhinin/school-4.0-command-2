@@ -110,8 +110,14 @@ function removeGeoPoints() {
 }
 
 function getSelectedTruck() {
-    var selected_truck = $('input[name=choosedTruck]:choosed');
-    return selected_truck;
+    var selected_truck = $('input[name=choosedTruck]:checked').val();
+    truck.numberPlate = deleteDirty($('.' + selected_truck + ' .truckNumberPlate').html());
+    truck.model = deleteDirty($('.' + selected_truck + ' .truckModel').html());
+    truck.volume = convertFloat($('.' + selected_truck + ' .truckVolume').html());
+    truck.cost = convertFloat($('.' + selected_truck + ' .truckCost').html());
+    
+    console.log(selected_truck);
+    console.log(truck);
 }
 
 function createRoute() {

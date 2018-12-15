@@ -18,7 +18,7 @@
 @foreach(var item in Model) {
     <tr class="truckItem-@i">
         <td>
-            <input type="radio" name="choosedTruck" />
+            <input type="radio" name="choosedTruck" value="truckItem-@i"/>
         </td>
         <td class="truckNumberPlate">
             @Html.DisplayFor(modelItem => item.NumberPlate)
