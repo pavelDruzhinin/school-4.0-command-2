@@ -138,6 +138,7 @@ function createRoute() {
 
     // Рисуем маршрут
     drawRoute(finalCords.arrayNewRouteCords, finalCords.arrayIndexRound);
+    document.querySelector('.reportButton').disabled = false; 
 }
 
 function drawRoute(_cords, _index) {
